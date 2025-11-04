@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Clone</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #20232a, #3c4048);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 400px;
+      background: #2f3136;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .header {
+      background: #1e1f22;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-weight: 600;
+      border-bottom: 1px solid #444;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 0.95em;
+      line-height: 1.4em;
+    }
+
+    .user {
+      background-color: #0078ff;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    .bot {
+      background-color: #e0e0e0;
+      color: #000;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      background: #1e1f22;
+      border-top: 1px solid #444;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      background: #3c4048;
+      color: white;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #0078ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-left: 10px;
+      padding: 10px 15px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #005ecb;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="header">ChatGPT Clone 💬</div>
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">Hello! I'm your AI assistant. How can I help you today?</div>
+    </div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+
+    // Function to simulate sending message
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (message === '') return;
+
+      // Add user message
+      addMessage(message, 'user');
+      userInput.value = '';
+
+      // Simulate bot response
+      setTimeout(() => {
+        const botResponse = generateBotReply(message);
+        addMessage(botResponse, 'bot');
+      }, 700);
+    }
+
+    // Add message bubble
+    function addMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', sender);
+      msgDiv.textContent = text;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Simple fake AI reply
+    function generateBotReply(input) {
+      input = input.toLowerCase();
+      if (input.includes('hello') || input.includes('hi'))
+        return "Hey there 👋! How are you doing today?";
+      if (input.includes('name'))
+        return "I'm ChatGPT Clone — your friendly chatbot!";
+      if (input.includes('time')) 
+        return "Current time is " + new Date().toLocaleTimeString();
+      if (input.includes('bye'))
+        return "Goodbye! Have a great day 😊";
+      return "I'm not sure about that 🤔, but I’ll try to learn more!";
+    }
+
+    // Allow Enter key to send
+    userInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+
+</body>
+</html>
